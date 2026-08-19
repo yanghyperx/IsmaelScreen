@@ -65,6 +65,37 @@ function readTokenPayload() {
   }
 }
 
+/**
+ * Os cards de qualidade/fps só espelham um <select> escondido — toda leitura
+ * de valor continua vindo dele. Sem isto, os cards ficam só de enfeite: nada
+ * marca o escolhido nem responde ao clique.
+ */
+function bindOptionCards(selectId, listId) {
+  const select = $(selectId);
+  const cards = Array.from($(listId).querySelectorAll('.option-card'));
+
+  function sync() {
+    for (const card of cards) {
+      const ativo = card.dataset.value === select.value;
+      card.classList.toggle('active', ativo);
+      card.setAttribute('aria-checked', String(ativo));
+    }
+  }
+
+  for (const card of cards) {
+    card.addEventListener('click', () => {
+      select.value = card.dataset.value;
+      sync();
+    });
+  }
+
+  sync();
+  return sync;
+}
+
+bindOptionCards('quality', 'qualityCards');
+bindOptionCards('fps', 'fpsCards');
+
 // ------------------------------------------------------------------ arranque
 
 const payload = token && readTokenPayload();
