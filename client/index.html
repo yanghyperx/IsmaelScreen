@@ -216,24 +216,63 @@
           <h2 id="modalTitle">Compartilhar sua tela</h2>
           <p id="modalSub" class="modal-sub">Escolha a tela e comece a transmitir.</p>
 
-          <label class="field">
-            <span>Qualidade</span>
-            <select id="mQuality">
+          <div class="field-stack">
+            <span class="field-stack-label" id="mQualityLabel">Qualidade</span>
+            <select id="mQuality" hidden>
               <option value="1000000">Leve — 1 Mbps</option>
               <option value="2500000" selected>Boa — 2,5 Mbps</option>
               <option value="5000000">Alta — 5 Mbps</option>
               <option value="8000000">Máxima — 8 Mbps</option>
             </select>
-          </label>
+            <div class="option-list" id="mQualityCards" role="radiogroup" aria-labelledby="mQualityLabel">
+              <button type="button" class="option-card" data-value="1000000" role="radio" aria-checked="false">
+                <span class="option-title">Leve</span>
+                <span class="option-spec">1 Mbps</span>
+                <span class="option-desc">Menor consumo de internet.</span>
+              </button>
+              <button type="button" class="option-card" data-value="2500000" role="radio" aria-checked="true">
+                <span class="option-title">Boa</span>
+                <span class="option-spec">2,5 Mbps</span>
+                <span class="option-desc">Bom equilíbrio para a maioria das situações.</span>
+              </button>
+              <button type="button" class="option-card" data-value="5000000" role="radio" aria-checked="false">
+                <span class="option-title">Alta</span>
+                <span class="option-spec">5 Mbps</span>
+                <span class="option-desc">Mais nitidez. Exige internet melhor.</span>
+              </button>
+              <button type="button" class="option-card" data-value="8000000" role="radio" aria-checked="false">
+                <span class="option-title">Máxima</span>
+                <span class="option-spec">8 Mbps</span>
+                <span class="option-desc">Melhor qualidade. Internet rápida dos dois lados.</span>
+              </button>
+            </div>
+          </div>
 
-          <label class="field">
-            <span>Taxa de quadros</span>
-            <select id="mFps">
+          <div class="field-stack">
+            <span class="field-stack-label" id="mFpsLabel">Taxa de quadros</span>
+            <select id="mFps" hidden>
               <option value="15">15 fps — economiza banda</option>
               <option value="30" selected>30 fps — mais fluido</option>
               <option value="60">60 fps — jogo e vídeo, exija 5 Mbps ou mais</option>
             </select>
-          </label>
+            <div class="option-list" id="mFpsCards" role="radiogroup" aria-labelledby="mFpsLabel">
+              <button type="button" class="option-card" data-value="15" role="radio" aria-checked="false">
+                <span class="option-title">15 fps</span>
+                <span class="option-spec">Leve</span>
+                <span class="option-desc">Economiza banda. Ideal para texto e apresentações.</span>
+              </button>
+              <button type="button" class="option-card" data-value="30" role="radio" aria-checked="true">
+                <span class="option-title">30 fps</span>
+                <span class="option-spec">Equilibrado</span>
+                <span class="option-desc">Bom para a maioria das situações.</span>
+              </button>
+              <button type="button" class="option-card" data-value="60" role="radio" aria-checked="false">
+                <span class="option-title">60 fps</span>
+                <span class="option-spec">Fluido</span>
+                <span class="option-desc">Jogos e vídeo. Exige 5 Mbps ou mais.</span>
+              </button>
+            </div>
+          </div>
 
           <label class="field-check">
             <input id="mAudio" type="checkbox" />
