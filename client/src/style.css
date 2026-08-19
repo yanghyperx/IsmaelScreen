@@ -1,20 +1,15 @@
 :root {
-  --bg: #0a0a12;
-  --panel: rgba(30, 31, 40, 0.6);
-  --tile: rgba(43, 45, 56, 0.55);
-  --line: rgba(255, 255, 255, 0.09);
+  --bg: #0f1013;
+  --panel: #1a1b1f;
+  --tile: #1e1f24;
+  --line: rgba(255, 255, 255, 0.08);
   --text: #f2f3f5;
-  --muted: #b5bac1;
+  --muted: #9aa0a8;
   --accent: #5865f2;
-  --accent-2: #a855f7;
+  --accent-soft: rgba(88, 101, 242, 0.14);
   --danger: #f23f43;
   --live: #23a55a;
-
-  /* Vidro: usado em tiles, painéis, pílulas e botões flutuantes. */
-  --glass-bg: rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(255, 255, 255, 0.14);
-  --glass-blur: 18px;
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 * {
@@ -34,12 +29,7 @@ body {
 }
 
 body {
-  background:
-    radial-gradient(circle at 15% 15%, rgba(88, 101, 242, 0.25), transparent 40%),
-    radial-gradient(circle at 85% 25%, rgba(168, 85, 247, 0.2), transparent 45%),
-    radial-gradient(circle at 50% 90%, rgba(35, 165, 90, 0.12), transparent 50%),
-    var(--bg);
-  background-attachment: fixed;
+  background: var(--bg);
   color: var(--text);
   font: 15px/1.5 "gg sans", "Segoe UI", system-ui, sans-serif;
   overflow: hidden;
@@ -78,22 +68,20 @@ body {
   min-width: 0;
   min-height: 0;
   background: var(--tile);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
   border-radius: 14px;
   overflow: hidden;
   display: grid;
   place-items: center;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  border: 1px solid var(--line);
+  box-shadow: var(--card-shadow);
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 /* Quem está transmitindo ganha a borda verde, igual à call do Discord. */
 .tile.sharing {
   border-color: var(--live);
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 0 1px rgba(35, 165, 90, 0.35), var(--glass-shadow);
+  background: #000;
+  box-shadow: 0 0 0 1px rgba(35, 165, 90, 0.35), var(--card-shadow);
   cursor: pointer;
 }
 
@@ -488,9 +476,7 @@ body {
   gap: 5px;
   padding: 4px 9px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.7);
   color: var(--text);
   font-size: 12.5px;
   font-weight: 500;
@@ -582,9 +568,7 @@ body {
   min-width: 0;
   padding: 4px 9px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.7);
   font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
@@ -607,9 +591,7 @@ body {
   top: 8px;
   padding: 3px 8px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.65);
   color: var(--muted);
   font-size: 11.5px;
 }
@@ -701,11 +683,9 @@ button {
   gap: 7px;
   padding: 7px 13px;
   border-radius: 999px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--card-shadow);
   color: var(--text);
   font-size: 13px;
   font-weight: 500;
@@ -736,11 +716,9 @@ button {
   gap: 6px;
   padding: 5px;
   border-radius: 999px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--card-shadow);
 }
 
 /* Grupo sem nenhum botão visível vira uma bolha escura solta na tela — é o que
@@ -779,7 +757,7 @@ button {
 
 .btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.12);
-  border-color: var(--glass-border);
+  border-color: var(--line);
 }
 
 .btn.wide {
@@ -788,13 +766,12 @@ button {
 
 /* Ação principal disponível */
 .btn.go {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: var(--accent);
   color: #fff;
-  box-shadow: 0 4px 18px rgba(88, 101, 242, 0.4);
 }
 
 .btn.go:hover {
-  filter: brightness(1.1);
+  background: #4752c4;
 }
 
 /* Você está transmitindo — encerrar */
@@ -852,13 +829,12 @@ button {
 /* ------------------------------------------------------------------ painel */
 
 .panel {
-  width: min(300px, calc(100vw - 28px));
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
+  width: min(320px, calc(100vw - 28px));
+  padding: 18px 18px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
 }
 
 .panel-row {
@@ -965,23 +941,20 @@ button {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 14px 16px;
+  padding: 16px 18px;
   border-radius: 14px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  background: var(--tile);
+  border: 1px solid var(--line);
+  box-shadow: var(--card-shadow);
   text-align: left;
   color: var(--text);
   font: inherit;
-  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  transition: border-color 0.15s, background 0.15s;
 }
 
 .room-card:hover {
-  background: rgba(88, 101, 242, 0.14);
-  border-color: rgba(88, 101, 242, 0.5);
-  transform: translateY(-2px);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 .room-card-top {
@@ -1173,6 +1146,73 @@ button {
   border: 1px solid var(--line);
   border-radius: 7px;
   font: inherit;
+}
+
+.field-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.field-stack-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #111214;
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.option-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.option-card.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.option-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.option-spec {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.option-card.active .option-spec {
+  color: #b7bdff;
+}
+
+.option-desc {
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--muted);
 }
 
 /* A caixa de marcar alinha pelo topo: o texto de apoio quebra em duas linhas e
