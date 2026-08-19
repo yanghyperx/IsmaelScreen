@@ -1,13 +1,20 @@
 :root {
-  --bg: #000;
-  --panel: #1e1f22;
-  --tile: #2b2d31;
-  --line: #35373c;
+  --bg: #0a0a12;
+  --panel: rgba(30, 31, 40, 0.6);
+  --tile: rgba(43, 45, 56, 0.55);
+  --line: rgba(255, 255, 255, 0.09);
   --text: #f2f3f5;
   --muted: #b5bac1;
   --accent: #5865f2;
+  --accent-2: #a855f7;
   --danger: #f23f43;
   --live: #23a55a;
+
+  /* Vidro: usado em tiles, painéis, pílulas e botões flutuantes. */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-blur: 18px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -27,7 +34,12 @@ body {
 }
 
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(88, 101, 242, 0.25), transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(168, 85, 247, 0.2), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(35, 165, 90, 0.12), transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   font: 15px/1.5 "gg sans", "Segoe UI", system-ui, sans-serif;
   overflow: hidden;
@@ -66,18 +78,22 @@ body {
   min-width: 0;
   min-height: 0;
   background: var(--tile);
-  border-radius: 8px;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: 14px;
   overflow: hidden;
   display: grid;
   place-items: center;
-  border: 2px solid transparent;
-  transition: border-color 0.15s;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 
 /* Quem está transmitindo ganha a borda verde, igual à call do Discord. */
 .tile.sharing {
   border-color: var(--live);
-  background: #000;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 1px rgba(35, 165, 90, 0.35), var(--glass-shadow);
   cursor: pointer;
 }
 
@@ -472,7 +488,9 @@ body {
   gap: 5px;
   padding: 4px 9px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: var(--text);
   font-size: 12.5px;
   font-weight: 500;
@@ -564,7 +582,9 @@ body {
   min-width: 0;
   padding: 4px 9px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
@@ -587,7 +607,9 @@ body {
   top: 8px;
   padding: 3px 8px;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: var(--muted);
   font-size: 11.5px;
 }
@@ -679,8 +701,11 @@ button {
   gap: 7px;
   padding: 7px 13px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(8px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   color: var(--text);
   font-size: 13px;
   font-weight: 500;
@@ -711,8 +736,11 @@ button {
   gap: 6px;
   padding: 5px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
 /* Grupo sem nenhum botão visível vira uma bolha escura solta na tela — é o que
@@ -731,12 +759,12 @@ button {
   height: 46px;
   min-width: 46px;
   padding: 0 14px;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 999px;
-  background: var(--tile);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   font: 500 14px/1 inherit;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .btn svg {
@@ -750,7 +778,8 @@ button {
 }
 
 .btn:hover:not(:disabled) {
-  background: #43454b;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--glass-border);
 }
 
 .btn.wide {
@@ -759,12 +788,13 @@ button {
 
 /* Ação principal disponível */
 .btn.go {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #fff;
+  box-shadow: 0 4px 18px rgba(88, 101, 242, 0.4);
 }
 
 .btn.go:hover {
-  background: #4752c4;
+  filter: brightness(1.1);
 }
 
 /* Você está transmitindo — encerrar */
@@ -824,10 +854,11 @@ button {
 .panel {
   width: min(300px, calc(100vw - 28px));
   padding: 14px 16px;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
 }
 
 .panel-row {
@@ -935,18 +966,22 @@ button {
   flex-direction: column;
   gap: 6px;
   padding: 14px 16px;
-  border-radius: 10px;
-  background: var(--tile);
-  border: 1px solid transparent;
+  border-radius: 14px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   text-align: left;
   color: var(--text);
   font: inherit;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
 }
 
 .room-card:hover {
-  background: #35373d;
-  border-color: var(--accent);
+  background: rgba(88, 101, 242, 0.14);
+  border-color: rgba(88, 101, 242, 0.5);
+  transform: translateY(-2px);
 }
 
 .room-card-top {
