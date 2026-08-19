@@ -8,7 +8,7 @@
          dos cabeçalhos no-store guardou a versão antiga por heurística do
          navegador, e continuaria usando ela para sempre. Trocar a query força
          uma URL nova. Incremente ao publicar mudanças nesses arquivos. -->
-    <link rel="stylesheet" href="/share.css?v=9" />
+    <link rel="stylesheet" href="/share.css?v=10" />
   </head>
   <body>
     <main class="card">
@@ -18,23 +18,62 @@
       </header>
 
       <section id="setup">
-        <div class="row">
-          <label for="quality">Qualidade</label>
-          <select id="quality">
+        <div class="row row-stack">
+          <label id="qualityLabel">Qualidade</label>
+          <select id="quality" hidden>
             <option value="1000000">Leve — 1 Mbps</option>
             <option value="2500000" selected>Boa — 2,5 Mbps</option>
             <option value="5000000">Alta — 5 Mbps</option>
             <option value="8000000">Máxima — 8 Mbps</option>
           </select>
+          <div class="option-list" id="qualityCards" role="radiogroup" aria-labelledby="qualityLabel">
+            <button type="button" class="option-card" data-value="1000000" role="radio" aria-checked="false">
+              <span class="option-title">Leve</span>
+              <span class="option-spec">1 Mbps</span>
+              <span class="option-desc">Menor consumo de internet.</span>
+            </button>
+            <button type="button" class="option-card" data-value="2500000" role="radio" aria-checked="true">
+              <span class="option-title">Boa</span>
+              <span class="option-spec">2,5 Mbps</span>
+              <span class="option-desc">Bom equilíbrio para a maioria das situações.</span>
+            </button>
+            <button type="button" class="option-card" data-value="5000000" role="radio" aria-checked="false">
+              <span class="option-title">Alta</span>
+              <span class="option-spec">5 Mbps</span>
+              <span class="option-desc">Mais nitidez. Exige internet melhor.</span>
+            </button>
+            <button type="button" class="option-card" data-value="8000000" role="radio" aria-checked="false">
+              <span class="option-title">Máxima</span>
+              <span class="option-spec">8 Mbps</span>
+              <span class="option-desc">Melhor qualidade. Internet rápida dos dois lados.</span>
+            </button>
+          </div>
         </div>
 
-        <div class="row">
-          <label for="fps">Taxa de quadros</label>
-          <select id="fps">
+        <div class="row row-stack">
+          <label id="fpsLabel">Taxa de quadros</label>
+          <select id="fps" hidden>
             <option value="15">15 fps — economiza banda</option>
             <option value="30" selected>30 fps — mais fluido</option>
             <option value="60">60 fps — jogo e vídeo, exija 5 Mbps ou mais</option>
           </select>
+          <div class="option-list" id="fpsCards" role="radiogroup" aria-labelledby="fpsLabel">
+            <button type="button" class="option-card" data-value="15" role="radio" aria-checked="false">
+              <span class="option-title">15 fps</span>
+              <span class="option-spec">Leve</span>
+              <span class="option-desc">Economiza banda. Ideal para texto e apresentações.</span>
+            </button>
+            <button type="button" class="option-card" data-value="30" role="radio" aria-checked="true">
+              <span class="option-title">30 fps</span>
+              <span class="option-spec">Equilibrado</span>
+              <span class="option-desc">Bom para a maioria das situações.</span>
+            </button>
+            <button type="button" class="option-card" data-value="60" role="radio" aria-checked="false">
+              <span class="option-title">60 fps</span>
+              <span class="option-spec">Fluido</span>
+              <span class="option-desc">Jogos e vídeo. Exige 5 Mbps ou mais.</span>
+            </button>
+          </div>
         </div>
 
         <p id="presetLine" class="preset" hidden></p>
@@ -72,6 +111,6 @@
       </footer>
     </main>
 
-    <script type="module" src="/share.js?v=10"></script>
+    <script type="module" src="/share.js?v=13"></script>
   </body>
 </html>
