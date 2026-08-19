@@ -197,10 +197,15 @@ button {
   place-items: center;
   width: 46px;
   height: 46px;
-  border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--card);
-  font-size: 20px;
+  background: linear-gradient(135deg, #5865f2, #8b5cf6);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(88, 101, 242, 0.35);
+}
+
+.mark svg {
+  width: 24px;
+  height: 24px;
 }
 
 .center h1 {
@@ -249,7 +254,11 @@ button {
   width: 30px;
   height: 30px;
   border-radius: var(--radius-sm);
-  font-size: 13px;
+}
+
+.topbar .mark svg {
+  width: 16px;
+  height: 16px;
 }
 
 .topbar h1 {
