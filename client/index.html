@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Como não compartilhar tela no Discord</title>
+    <title>IsmaelScreen — Sala de Tela</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
@@ -24,9 +24,22 @@
       <!-- Lobby: escolher ou criar sala antes de entrar -->
       <div id="lobby" class="lobby" hidden>
         <header class="lobby-head">
-          <div>
-            <h1>Salas</h1>
-            <p class="muted">Neste canal de voz</p>
+          <div class="lobby-head-title">
+            <div class="brand">
+              <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9.5h9v9.5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9.5Z" />
+                  <path d="M15 11.5h1.8A2.2 2.2 0 0 1 19 13.7v2.6a2.2 2.2 0 0 1-2.2 2.2H15" />
+                  <path d="M6.3 9.5c-.5-1.2.1-2.4 1.3-2.8.1-1.1 1-2 2.2-2 .9 0 1.7.5 2.1 1.3.4-.5 1-.8 1.7-.8 1.3 0 2.4 1.1 2.4 2.4 0 .7-.3 1.3-.8 1.8" />
+                  <path d="M9 12.5v6M12.5 12.5v6" />
+                </svg>
+              </span>
+              <span class="brand-text">
+                <strong>IsmaelScreen</strong>
+                <em>Sala de Tela</em>
+              </span>
+            </div>
+            <p class="muted">Salas neste canal de voz</p>
           </div>
           <div class="lobby-actions">
             <button id="lobbyUser" class="user-chip" title="Seu perfil" hidden></button>
@@ -213,6 +226,17 @@
 
       <div id="modal" class="modal" hidden>
         <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <div class="modal-brand">
+            <span class="brand-mark brand-mark-sm" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9.5h9v9.5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9.5Z" />
+                <path d="M15 11.5h1.8A2.2 2.2 0 0 1 19 13.7v2.6a2.2 2.2 0 0 1-2.2 2.2H15" />
+                <path d="M6.3 9.5c-.5-1.2.1-2.4 1.3-2.8.1-1.1 1-2 2.2-2 .9 0 1.7.5 2.1 1.3.4-.5 1-.8 1.7-.8 1.3 0 2.4 1.1 2.4 2.4 0 .7-.3 1.3-.8 1.8" />
+                <path d="M9 12.5v6M12.5 12.5v6" />
+              </svg>
+            </span>
+            <span class="modal-brand-text">IsmaelScreen</span>
+          </div>
           <h2 id="modalTitle">Compartilhar sua tela</h2>
           <p id="modalSub" class="modal-sub">Escolha a tela e comece a transmitir.</p>
 
