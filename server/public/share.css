@@ -1,12 +1,15 @@
 :root {
-  --bg: #1a1b1e;
-  --card: #232428;
-  --line: #35373c;
+  --bg: #0a0a12;
+  --card: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.14);
   --text: #f2f3f5;
   --muted: #9b9ea3;
   --accent: #5865f2;
+  --accent-2: #a855f7;
   --danger: #da373c;
   --ok: #23a55a;
+  --glass-blur: 20px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -23,7 +26,12 @@ body {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(88, 101, 242, 0.25), transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(168, 85, 247, 0.2), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(35, 165, 90, 0.12), transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   font: 15px/1.5 "gg sans", "Segoe UI", system-ui, sans-serif;
 }
@@ -32,9 +40,12 @@ body {
   width: 100%;
   max-width: 520px;
   background: var(--card);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 18px;
   padding: 28px;
+  box-shadow: var(--glass-shadow);
 }
 
 h1 {
@@ -65,7 +76,7 @@ select {
   flex: 1;
   max-width: 260px;
   padding: 8px 10px;
-  background: #1e1f22;
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -115,7 +126,8 @@ button:disabled {
 }
 
 .primary {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 4px 18px rgba(88, 101, 242, 0.4);
 }
 
 .danger {
@@ -169,7 +181,7 @@ video {
   margin: 18px 0 24px;
   padding: 10px 12px;
   border-radius: 6px;
-  background: #1e1f22;
+  background: rgba(255, 255, 255, 0.05);
   color: var(--muted);
   font-size: 13px;
 }
@@ -184,7 +196,7 @@ video {
 
 .stats div {
   padding: 10px 4px;
-  background: #1e1f22;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
 }
 
