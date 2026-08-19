@@ -528,7 +528,7 @@ function openProfile() {
   $('profileId').textContent = inDiscord ? `Discord · ${session.user.id}` : 'modo local';
   $('profileInput').value = me.name;
 
-  $('profileModal').hidden = false;
+  $('profileModal').hidden = false;
   $('profileInput').focus();
   $('profileInput').select();
 }
@@ -1001,6 +1001,41 @@ function remove(key) {
   }
 }
 
+function selectHasValue(select, value) {
+  return Array.from(select.options).some((o) => o.value === value);
+}
+
+/**
+ * Os cards visíveis do modal só espelham um <select> escondido — toda a
+ * leitura de valor (bitrate, fps, preferência salva) continua vindo dele, sem
+ * duplicar a lógica. Clicar num card só faz o que escolher no menu faria.
+ */
+function bindOptionCards(selectId, listId) {
+  const select = $(selectId);
+  const cards = Array.from($(listId).querySelectorAll('.option-card'));
+
+  function sync() {
+    for (const card of cards) {
+      const ativo = card.dataset.value === select.value;
+      card.classList.toggle('active', ativo);
+      card.setAttribute('aria-checked', String(ativo));
+    }
+  }
+
+  for (const card of cards) {
+    card.addEventListener('click', () => {
+      select.value = card.dataset.value;
+      sync();
+    });
+  }
+
+  sync();
+  return sync;
+}
+
+const syncMQuality = bindOptionCards('mQuality', 'mQualityCards');
+const syncMFps = bindOptionCards('mFps', 'mFpsCards');
+
 // -------------------------------------------------------------------- lobby
 
 /** Tokens da sala atual. null = estamos no lobby. */
@@ -1184,7 +1219,7 @@ function askPassword(room, error) {
   $('joinError').textContent = error ?? '';
   $('joinError').hidden = !error;
   if (!error) $('joinPass').value = '';
-  $('joinModal').hidden = false;
+  $('joinModal').hidden = false;
   $('joinPass').focus();
 }
 
@@ -1602,6 +1637,40 @@ $('share').addEventListener('click', () => {
  * já vêm com os valores atuais e o botão aplica em vez de iniciar.
  */
 let modalMode = 'start';
+const BROADCAST_FPS_KEY = 'broadcastFps';
+const BROADCAST_BITRATE_KEY = 'broadcastBitrate';
+
+/**
+ * Devolve ao modal as escolhas da última transmissão.
+ *
+ * Os dois seletores andam juntos: lembrar a taxa de quadros e esquecer a
+ * qualidade deixaria metade do formulário obedecendo o que a pessoa escolheu e
+ * a outra metade voltando ao padrão, sem nada na tela explicando a diferença.
+ *
+ * Cada valor é conferido contra as opções antes de entrar. Um valor órfão — de
+ * quando as opções eram outras — não dá erro ao ser atribuído: o select fica
+ * em branco, calado, e o Number() disso vira NaN na hora de transmitir.
+ */
+function applySavedBroadcastPrefs() {
+  aplicarSalvo($('mFps'), BROADCAST_FPS_KEY);
+  aplicarSalvo($('mQuality'), BROADCAST_BITRATE_KEY);
+}
+
+function aplicarSalvo(select, chave) {
+  const valor = read(chave);
+  if (valor && selectHasValue(select, valor)) select.value = valor;
+}
+
+/**
+ * Guarda o que a pessoa usou de verdade.
+ *
+ * Chamado depois de a captura começar, e não quando o modal abre: quem escolhe
+ * 60 fps e desiste no seletor do navegador não escolheu nada.
+ */
+function saveBroadcastPrefs() {
+  store(BROADCAST_FPS_KEY, $('mFps').value);
+  store(BROADCAST_BITRATE_KEY, $('mQuality').value);
+}
 
 function openModal(mode) {
   modalMode = mode;
@@ -1624,9 +1693,14 @@ function openModal(mode) {
     const s = myBroadcast.getSettings();
     $('mQuality').value = String(s.bitrate);
     $('mFps').value = String(s.fps);
+  } else {
+    applySavedBroadcastPrefs();
   }
 
-  $('modal').hidden = false;
+  syncMQuality();
+  syncMFps();
+
+  $('modal').hidden = false;
 }
 
 $('liveSettings').addEventListener('click', () => openModal('live'));
@@ -1723,6 +1797,7 @@ async function broadcastFromHere() {
   const startedAt = performance.now();
   try {
     await b.start();
+    saveBroadcastPrefs();
     myBroadcast = b;
     closeModal();
     renderBar();
@@ -1751,6 +1826,7 @@ $('modalGo').addEventListener('click', async () => {
       bitrate: Number($('mQuality').value),
       fps: Number($('mFps').value),
     });
+    saveBroadcastPrefs();
     closeModal();
     return;
   }
@@ -1761,6 +1837,7 @@ $('modalGo').addEventListener('click', async () => {
   if (await broadcastFromHere()) return;
 
   closeModal();
+  saveBroadcastPrefs();
 
   // As opções seguem na URL: a página de captura já abre configurada, sem
   // pedir as mesmas escolhas de novo.
@@ -1792,7 +1869,7 @@ $('newRoom').addEventListener('click', () => {
   if (!session) return;
   $('createName').value = '';
   $('createPass').value = '';
-  $('createModal').hidden = false;
+  $('createModal').hidden = false;
   $('createName').focus();
 });
 
@@ -1859,7 +1936,7 @@ $('roomSave').addEventListener('click', async () => {
 function openRoomSettings() {
   $('roomSub').textContent = roomInfo?.name ?? '';
   $('roomPass').value = '';
-  $('roomModal').hidden = false;
+  $('roomModal').hidden = false;
   $('roomPass').focus();
 }
 
