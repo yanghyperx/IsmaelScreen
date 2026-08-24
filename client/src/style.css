@@ -647,8 +647,11 @@ button {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 16px 16px 0;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
 }
 
 .bottombar {
@@ -660,11 +663,114 @@ button {
   padding: 0 16px 16px;
 }
 
-/* Sem nada visível dentro, a barra vira uma faixa vazia — é o que sobra no
-   lobby, onde todos os controles da sala saem de cena. */
-.topbar:not(:has(> :not([hidden]))),
+/* O topbar agora tem cabeçalho fixo (ícone + título) sempre visível durante a
+   sala, então quem decide se ele aparece é o JS (topbar.hidden no lobby),
+   não mais a ausência de filhos visíveis. */
 .bottombar:not(:has(.btn:not([hidden]))) {
   display: none;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.topbar-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.topbar-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.topbar-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.topbar-title strong {
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar-title span {
+  font-size: 12.5px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+/* Dentro do topbar o grupo perde a cápsula própria — o botão de compartilhar
+   já é a cápsula, como no cabeçalho de referência. */
+.topbar-right .group {
+  padding: 0;
+  gap: 8px;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.topbar-right .btn.wide {
+  box-shadow: 0 6px 16px rgba(88, 101, 242, 0.35);
+}
+
+.topbar-right .btn.wide.live {
+  box-shadow: 0 6px 16px rgba(242, 63, 67, 0.35);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 3px rgba(35, 165, 90, 0.18);
+}
+
+.status-pill.status-off {
+  color: #f0b232;
+}
+
+.status-pill.status-off .status-dot {
+  background: #f0b232;
+  box-shadow: 0 0 0 3px rgba(240, 178, 50, 0.18);
+  animation: pulse 1.6s ease-in-out infinite;
 }
 
 .room-pill {
