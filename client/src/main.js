@@ -1086,6 +1086,7 @@ async function showLobby() {
   limparSala();
 
   $('lobby').hidden = false;
+  $('topbar').hidden = true;
   $('grid').hidden = true;
   $('empty').hidden = true;
   $('roomPill').hidden = true;
@@ -1264,6 +1265,7 @@ function openRoom(tokens, room) {
   store(`sala:${room.id}`, JSON.stringify({ tokens, name: room.name }));
 
   $('lobby').hidden = true;
+  $('topbar').hidden = false;
   $('empty').hidden = false;
   $('share').hidden = false;
   $('people').hidden = false;
@@ -1281,6 +1283,7 @@ function openRoom(tokens, room) {
   $('roomPill').textContent = room.name;
 
   setEmpty('Entrando…', room.name);
+  setStatus(false, 'Conectando…');
   connect();
 }
 
@@ -1461,6 +1464,15 @@ async function post(url, body, { retry = true } = {}) {
 
 // ----------------------------------------------------------------- websocket
 
+/** Reflete o estado da conexão no topbar — verde parado quando dá, amarelo
+ * pulsando quando a sala está tentando voltar sozinha. */
+function setStatus(ok, texto) {
+  const pill = $('statusPill');
+  if (!pill) return;
+  pill.classList.toggle('status-off', !ok);
+  $('statusText').textContent = texto;
+}
+
 function connect() {
   if (!roomTokens) return;
   const proto = location.protocol === 'https:' ? 'wss' : 'ws';
@@ -1474,6 +1486,7 @@ function connect() {
   ws.addEventListener('open', () => {
     abriu = true;
     reconnectDelay = 1000;
+    setStatus(true, 'Conectado');
     $('grid').hidden = false;
     setEmpty('Ninguém na sala', 'Aguardando participantes.');
 
@@ -1583,6 +1596,7 @@ function connect() {
     }
 
     setEmpty('Reconectando…', 'A conexão com a sala caiu.');
+    setStatus(false, 'Reconectando…');
     // Backoff — evita martelar o servidor se ele estiver fora do ar.
     setTimeout(connect, reconnectDelay);
     reconnectDelay = Math.min(reconnectDelay * 2, 15_000);
