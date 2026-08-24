@@ -8,9 +8,52 @@
   </head>
   <body>
     <div id="app">
-      <div class="topbar">
-        <div id="people" class="pill" title="Pessoas na sala"></div>
-        <div id="roomPill" class="pill room-pill" hidden></div>
+      <div id="topbar" class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="12" rx="2" />
+              <path d="M8 20h8M12 16v4" />
+            </svg>
+          </span>
+          <div class="topbar-title">
+            <strong>Telas do canal</strong>
+            <span>Integrado à call do Discord</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <span id="statusPill" class="status-pill">
+            <i class="status-dot" aria-hidden="true"></i>
+            <span id="statusText">Conectado</span>
+          </span>
+          <div id="people" class="pill" title="Pessoas na sala"></div>
+          <div id="roomPill" class="pill room-pill" hidden></div>
+
+          <div class="group group-share">
+            <button id="share" class="btn wide" title="Compartilhar tela">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5h18v11H3z" />
+                <path d="M8 20h8" />
+              </svg>
+              <span id="shareLabel">Compartilhar tela</span>
+            </button>
+            <button
+              id="liveSettings"
+              class="btn"
+              data-tip="Ajustes da transmissão"
+              aria-label="Ajustes da transmissão"
+              hidden
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="3.2" />
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       <main id="grid" class="grid"></main>
@@ -121,30 +164,6 @@
         </div>
 
         <div class="dock">
-          <div class="group">
-            <button id="share" class="btn wide" title="Compartilhar tela">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 5h18v11H3z" />
-                <path d="M8 20h8" />
-              </svg>
-              <span id="shareLabel">Compartilhar tela</span>
-            </button>
-            <button
-              id="liveSettings"
-              class="btn"
-              data-tip="Ajustes da transmissão"
-              aria-label="Ajustes da transmissão"
-              hidden
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="12" r="3.2" />
-                <path
-                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-                />
-              </svg>
-            </button>
-          </div>
-
           <div class="group">
             <button
               id="settings"
